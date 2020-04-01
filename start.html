@@ -7,6 +7,22 @@
 function kek(){
 	alert("maus feg")
 };
+
+function addCardAt(x,y,value){
+	var card = document.createElement("img");
+	console.log(card);
+	
+	
+	
+	card.src="cardimages/PNG/"+value+".png";
+	card.width = "500";
+	card.height = "500";
+	card.style = "position:absolute; left:"+x+"; top:"+y+";";
+	document.body.append(card);
+
+
+}
+addCardAt(0,0,"4H");
 </script>
 	
 	</body>
