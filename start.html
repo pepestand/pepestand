@@ -8,21 +8,20 @@ function kek(){
 	alert("maus feg")
 };
 
-function addCardAt(x,y,value){
+function addCardAt(x,y,w,value){
 	var card = document.createElement("img");
 	console.log(card);
 	
 	
 	
 	card.src="cardimages/PNG/"+value+".png";
-	card.width = "500";
-	card.height = "500";
-	card.style = "position:absolute; left:"+x+"; top:"+y+";";
+	card.width = w;
+	card.style = "position:absolute; left:"+x+"; top:"+y+";height:auto";
 	document.body.append(card);
 
 
 }
-addCardAt(0,0,"4H");
+addCardAt(0,0,50,"4H");
 </script>
 	
 	</body>
