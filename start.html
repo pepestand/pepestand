@@ -109,6 +109,127 @@ function changePlayerMoney(player,m){
 	
 	
 }
+
+
+
+function createFlopTurnRiver(visible = true){
+	var flop = document.createElement("div");
+	flop.style = "border:3px solid blue;width:250;z-Index=200;position:absolute;top:45%;left:40%";
+	flop.id = "flop";
+	document.getElementById("tableContainer").appendChild(flop);
+	
+	var flop1 = document.createElement("img");
+	flop1.id = "flop1";
+	flop1.src = "cardimages/PNG/gray_back.png";
+	flop1.style = "width: 50; height:auto; top:-70";
+	flop.appendChild(flop1);
+	
+	var flop2 = document.createElement("img");
+	flop2.id = "flop2";
+	flop2.src = "cardimages/PNG/gray_back.png";
+	flop2.style = "width: 50; height:auto; top:-70";
+	flop.appendChild(flop2);
+	
+	var flop3 = document.createElement("img");
+	flop3.id = "flop3";
+	flop3.src = "cardimages/PNG/gray_back.png";
+	flop3.style = "width: 50; height:auto";
+	flop.appendChild(flop3);
+	
+	var turn = document.createElement("img");
+	turn.id = "turn";
+	turn.src = "cardimages/PNG/gray_back.png";
+	turn.style = "width: 50; height:auto; top:-70";
+	flop.appendChild(turn);
+	
+	var river = document.createElement("img");
+	river.id = "river";
+	river.src = "cardimages/PNG/gray_back.png";
+	river.style = "width: 50; height:auto; top:-70";
+	flop.appendChild(river);
+	
+	if(!visible){
+		flop1.style.visibility = "hidden";
+		flop2.style.visibility = "hidden";
+		flop3.style.visibility = "hidden";
+		turn.style.visibility = "hidden";
+		river.style.visibility = "hidden";
+	
+	}
+	
+	
+	
+
+}
+
+
+
+
+function changeFlop1(card){
+	document.getElementById("flop1").src = "cardimages/PNG/"+card+".png";
+
+}
+
+function changeFlop2(card){
+	document.getElementById("flop2").src = "cardimages/PNG/"+card+".png";
+
+}
+
+function changeFlop3(card){
+	document.getElementById("flop3").src = "cardimages/PNG/"+card+".png";
+
+}
+
+function changeTurn(card){
+	document.getElementById("turn").src = "cardimages/PNG/"+card+".png";
+
+}
+
+function changeRiver(card){
+	document.getElementById("river").src = "cardimages/PNG/"+card+".png";
+
+}
+
+
+function changeFlop(card1,card2,card3){
+	changeFlop1(card1);
+	changeFlop2(card2);
+	changeFlop3(card3);
+
+}
+
+function changeBoard(card1,card2,card3,card4,card5){
+	changeFlop(card1,card2,card3);
+	changeTurn(card4);
+	changeRiver(card5);
+}
+
+
+
+function turnAroundBoard(){
+	document.getElementById("flop1").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("flop2").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("flop3").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("turn").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("river").src = "cardimages/PNG/gray_back.png";
+
+}
+
+createFlopTurnRiver(true);
+
+changeFlop1("KH");
+changeFlop2("KS");
+changeFlop3("KD");
+changeRiver("QD");
+changeTurn("7H");
+
+changeFlop("6H","6D","6S");
+
+changeBoard("AS","KS","QS","JS","10S");
+
+
+
+
 addPlayerAt("80%","20%","player1",500);
 addPlayerAt("10%","20%","player2",500);
 addPlayerAt("45%","90%","player3",500);
