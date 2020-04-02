@@ -2,6 +2,7 @@
 	<body>
 		<h1>Test</h1>
 		<button onclick="kek()">Click me</button> 
+		<button onclick="getCords()">get Cords</button> 
 		<div id="tableContainer" style="border:1px solid red; position: absolute; width:1000; height:500; overflow: hidden; background-color: grey;" >
 <svg id="table" height="400" width="800" style="border:0px solid black; position: absolute ;left:100;top:50">
 
@@ -232,7 +233,13 @@ changeBoard("AS","KS","QS","JS","10S");
 
 addPlayerAt("80%","20%","player1",500);
 addPlayerAt("10%","20%","player2",500);
-addPlayerAt("45%","90%","player3",500);
+addPlayerAt("5%","90%","player3",500);
+addPlayerAt("35%","90%","player4",500);
+addPlayerAt("45%","90%","player5",500);
+addPlayerAt("55%","90%","player6",500);
+addPlayerAt("65%","90%","player7",500);
+addPlayerAt("75%","90%","player8",500);
+addPlayerAt("85%","90%","player9",500);
 
 changePlayerMoney("player3",100);
 
@@ -240,6 +247,103 @@ changePlayerCard1("player1","KH");
 changePlayerCard2("player1","KD");
 
 changePlayerCards("player2","7C","7D");
+
+
+
+
+
+
+
+
+
+//draging
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+dragElement(document.getElementById("player1"));
+dragElement(document.getElementById("player2"));
+dragElement(document.getElementById("player3"));
+dragElement(document.getElementById("player4"));
+dragElement(document.getElementById("player5"));
+dragElement(document.getElementById("player6"));
+dragElement(document.getElementById("player7"));
+dragElement(document.getElementById("player8"));
+dragElement(document.getElementById("player9"));
+
+
+var p = document.createElement("p");
+p.id="cords";
+p.style  = "position: absolute; left: 1000";
+document.body.appendChild(p);
+
+function getCords(){
+
+	var p = document.getElementById("cords");
+	p.innerHTML = "";
+	for(var i=1;i<=9;i++){
+		var cordL = document.getElementById("player"+i).style.left;
+		var cordT = document.getElementById("player"+i).style.top;
+		p.innerHTML = p.innerHTML + "<br>" + "player"+i+" L:"+cordL+" T:"+cordT;
+	
+	}
+	
+	
+	
+	console.log(p);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 	
 	</body>
