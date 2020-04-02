@@ -2,7 +2,7 @@
 	<body>
 		<h1>Test</h1>
 		<button onclick="kek()">Click me</button> 
-		<div id="tableContainer" style="border:1px solid red; position: absolute; width:1000; height:500; overflow: hidden" >
+		<div id="tableContainer" style="border:1px solid red; position: absolute; width:1000; height:500; overflow: hidden; background-color: grey;" >
 <svg id="table" height="400" width="800" style="border:0px solid black; position: absolute ;left:100;top:50">
 
 <defs>
@@ -48,7 +48,7 @@ function addCardAt(x,y,w,value){
 
 function addPlayerAt(x,y,name,money){
 	var playerBox = document.createElement("div");
-	playerBox.id = "name";
+	playerBox.id = name;
 	
 	
 	playerBox.style = "border:1px solid blue;width:200;z-Index=200;position:absolute;";
@@ -63,8 +63,9 @@ function addPlayerAt(x,y,name,money){
 	
 	
 	var profileName = document.createElement("p");
-	profileName.style = "display: inline; left:60px;position: absolute; font-weight: bold;";
+	profileName.style = "display: inline; left:60px;position: absolute; font-weight: bold;color:white";
 	var node = document.createTextNode(name+" $"+money);
+	profileName.id = name + "pn";
 	profileName.appendChild(node);
 	playerBox.appendChild(profileName);
 	
@@ -97,12 +98,22 @@ function changePlayerCard2(player,card){
 function changePlayerCards(player,card1,card2){
 	changePlayerCard1(player,card1);
 	changePlayerCard2(player,card2);
+	
+
+}
 
 
+function changePlayerMoney(player,m){
+	var name = document.getElementById(player+"pn").innerHTML.split("$")[0];
+	document.getElementById(player+"pn").innerHTML = name+"$"+m;
+	
+	
 }
 addPlayerAt("80%","20%","player1",500);
 addPlayerAt("10%","20%","player2",500);
 addPlayerAt("45%","90%","player3",500);
+
+changePlayerMoney("player3",100);
 
 changePlayerCard1("player1","KH");
 changePlayerCard2("player1","KD");
