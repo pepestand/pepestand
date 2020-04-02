@@ -2,6 +2,30 @@
 	<body>
 		<h1>Test</h1>
 		<button onclick="kek()">Click me</button> 
+		<div id="tableContainer" style="border:1px solid red; position: absolute; width:1000; height:500; overflow: hidden" >
+<svg id="table" height="400" width="800" style="border:0px solid black; position: absolute ;left:100;top:50">
+
+<defs>
+    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(193,140,27);
+      stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(100,59,26);stop-opacity:1" />
+    </radialGradient>
+    
+    <radialGradient id="grad2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(0,180,0);
+      stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(0,20,0);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+
+
+
+  <ellipse cx="50%" cy="50%" rx="47%" ry="47%" stroke-width = "3%" fill="url(#grad2)" stroke = "url(#grad1)"  />
+
+  	
+  Sorry, your browser does not support inline SVG.
+</svg></div>
 	
 <script>
 function kek(){
@@ -21,7 +45,69 @@ function addCardAt(x,y,w,value){
 
 
 }
-addCardAt(0,0,50,"4H");
+
+function addPlayerAt(x,y,name,money){
+	var playerBox = document.createElement("div");
+	playerBox.id = "name";
+	
+	
+	playerBox.style = "border:1px solid blue;width:200;z-Index=200;position:absolute;";
+	playerBox.style.left = x;
+	playerBox.style.top = y;
+	
+	var profilePicture = document.createElement("img");
+	profilePicture.src = "https://pbs.twimg.com/profile_images/874254884421369856/STsgRa7p_400x400.jpg";
+	profilePicture.width = 50;
+	profilePicture.height = 50;
+	playerBox.appendChild(profilePicture);
+	
+	
+	var profileName = document.createElement("p");
+	profileName.style = "display: inline; left:60px;position: absolute; font-weight: bold;";
+	var node = document.createTextNode(name+" $"+money);
+	profileName.appendChild(node);
+	playerBox.appendChild(profileName);
+	
+	var card1 = document.createElement("img");
+	card1.src = "cardimages/PNG/AH.png";
+	card1.style = " position:absolute; width: 50; height:auto; top:-70";
+	card1.id = name+"card1";
+	playerBox.appendChild(card1);
+	
+	var card2 = document.createElement("img");
+	card2.src = "cardimages/PNG/AS.png";
+	card2.style = " position:absolute; width: 50; height:auto; top:-70; left:100";
+	card2.id = name+"card2";
+	playerBox.appendChild(card2);
+	
+	
+	document.getElementById("tableContainer").appendChild(playerBox);
+}
+
+function changePlayerCard1(player,card){
+	var playerCard1 = document.getElementById(player+"card1");
+	playerCard1.src = "cardimages/PNG/"+card+".png";
+}
+
+function changePlayerCard2(player,card){
+	var playerCard2 = document.getElementById(player+"card2");
+	playerCard2.src = "cardimages/PNG/"+card+".png";
+}
+
+function changePlayerCards(player,card1,card2){
+	changePlayerCard1(player,card1);
+	changePlayerCard2(player,card2);
+
+
+}
+addPlayerAt("80%","20%","player1",500);
+addPlayerAt("10%","20%","player2",500);
+addPlayerAt("45%","90%","player3",500);
+
+changePlayerCard1("player1","KH");
+changePlayerCard2("player1","KD");
+
+changePlayerCards("player2","7C","7D");
 </script>
 	
 	</body>
