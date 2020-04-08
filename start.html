@@ -45,6 +45,126 @@ function kek(){
 
 createBasicTable(9);
 
+class Player{
+	constructor(name, money, card1, card2){
+		this._name = name;
+		this._money = money;
+		this._card1 = card1;
+		this._card2 = card2;
+	}
+	set card1(card1){
+		this._card1 = card1;
+		}
+	
+	get card1(){
+		return this._card1;
+		}
+	set card2(card2){
+		this._card2 = card2;
+		}
+	
+	get card2(){
+		return this._card2;
+		}
+	set money(money){
+		this._money = money;
+		console.log("setter");
+		}
+	get money(){
+		return this._money;
+		}
+}
+
+class Flop{
+	constructor(card1,card2,card3){
+		this._card1 = card1;
+		this._card2 = card2;
+		this._card3 = card3;
+	}
+	
+	get card1(){
+		return _card1;
+	}
+	set card1(card1){
+		this._card1 = card1;
+	}
+	get card2(){
+		return _card2;
+	}
+	set card2(card2){
+		this._card2 = card2;
+	}
+	get card3(){
+		return _card3;
+	}
+	set card3(card3){
+		this._card3 = card3;
+	}
+	set cards(cards){
+		this._card1 = cards[0];
+		this._card2 = cards[1];
+		this._card3 = cards[2];
+	}	
+}
+
+class Turn{
+	constructor(card1){
+		this._card1 = card1;
+	}
+	get card1(){
+		return this._card1;
+	}
+	set card1(card1){
+		this._card1 = card1;
+	}
+
+}
+
+class River{
+	constructor(card1){
+		this._card1 = card1;
+	}
+	get card1(){
+		return this._card1;
+	}
+	set card1(card1){
+		this._card1 = card1;
+	}
+
+}
+
+
+class Bet{
+	constructor(player,bet){
+	 	this._player = player;
+	 	this._bet = bet;
+	 }
+
+}
+
+
+
+class Game{
+	constructor(players,flop,turn,river,bets){
+		this._players = players;
+		this._turn = turn;
+		this._river = river;
+		this._bets = bets;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
