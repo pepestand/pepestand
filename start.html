@@ -1,11 +1,11 @@
 <html>
 	<head>
-	
+
 	</head>
 	<body>
 		<h1>Test</h1>
-		<button onclick="kek()">Click me</button> 
-		<button onclick="getCords()">get Cords</button> 
+		<button onclick="kek()">Click me</button>
+		<button onclick="getCords()">get Cords</button>
 		<div id="tableContainer" style="border:1px solid red; position: absolute; width:1000; height:500; overflow: hidden; background-color: grey;" >
 <svg id="table" height="400" width="800" style="border:0px solid black; position: absolute ;left:100;top:50">
 
@@ -15,7 +15,7 @@
       stop-opacity:1" />
       <stop offset="100%" style="stop-color:rgb(100,59,26);stop-opacity:1" />
     </radialGradient>
-    
+
     <radialGradient id="grad2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
       <stop offset="0%" style="stop-color:rgb(0,180,0);
       stop-opacity:1" />
@@ -27,14 +27,14 @@
 
   <ellipse cx="50%" cy="50%" rx="47%" ry="47%" stroke-width = "3%" fill="url(#grad2)" stroke = "url(#grad1)"  />
 
-  	
+
   Sorry, your browser does not support inline SVG.
 </svg></div>
-	
 
-	
+
+
 	</body>
-	
+
 	<script type="text/javascript" src="tableView.js"></script>
 	<script>
 function kek(){
@@ -55,14 +55,14 @@ class Player{
 	set card1(card1){
 		this._card1 = card1;
 		}
-	
+
 	get card1(){
 		return this._card1;
 		}
 	set card2(card2){
 		this._card2 = card2;
 		}
-	
+
 	get card2(){
 		return this._card2;
 		}
@@ -76,12 +76,13 @@ class Player{
 }
 
 class Flop{
-	constructor(card1,card2,card3){
+	constructor(card1,card2,card3,bet){
 		this._card1 = card1;
 		this._card2 = card2;
 		this._card3 = card3;
+		this._bet = bet;
 	}
-	
+
 	get card1(){
 		return _card1;
 	}
@@ -104,25 +105,42 @@ class Flop{
 		this._card1 = cards[0];
 		this._card2 = cards[1];
 		this._card3 = cards[2];
-	}	
+	}
+
+	set bet(bet){
+		this._bet = bet;
+	}
+
+	get bet(){
+		return this._bet;
+	}
 }
 
 class Turn{
-	constructor(card1){
+	constructor(card1,bet){
 		this._card1 = card1;
+		this._bet = bet;
 	}
 	get card1(){
 		return this._card1;
 	}
 	set card1(card1){
 		this._card1 = card1;
+	}
+	set bet(bet){
+		this._bet = bet;
+	}
+
+	get bet(){
+		return this._bet;
 	}
 
 }
 
 class River{
-	constructor(card1){
+	constructor(card1,bet){
 		this._card1 = card1;
+		this._bet = bet;
 	}
 	get card1(){
 		return this._card1;
@@ -130,15 +148,40 @@ class River{
 	set card1(card1){
 		this._card1 = card1;
 	}
+	set bet(bet){
+		this._bet = bet;
+	}
+
+	get bet(){
+		return this._bet;
+	}
 
 }
 
+class Preflop{
+	constructor(bet){
+		this._bet = bet;
+	}
+	set bet(bet){
+		this._bet = bet;
+	}
+
+	get bet(){
+		return this._bet;
+	}
+}
+
+
+
 
 class Bet{
+	var current = 0;
 	constructor(player,bet){
 	 	this._player = player;
 	 	this._bet = bet;
 	 }
+
+
 
 }
 
@@ -151,6 +194,9 @@ class Game{
 		this._river = river;
 		this._bets = bets;
 	}
+
+
+
 }
 
 
