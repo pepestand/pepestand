@@ -76,11 +76,11 @@ class Player{
 }
 
 class Flop{
-	constructor(card1,card2,card3,bet){
+	constructor(card1,card2,card3,bets){
 		this._card1 = card1;
 		this._card2 = card2;
 		this._card3 = card3;
-		this._bet = bet;
+		this._bets = bets;
 	}
 
 	get card1(){
@@ -107,19 +107,19 @@ class Flop{
 		this._card3 = cards[2];
 	}
 
-	set bet(bet){
-		this._bet = bet;
+	set bets(bets){
+		this._bets = bets;
 	}
 
-	get bet(){
-		return this._bet;
+	get bets(){
+		return this._bets;
 	}
 }
 
 class Turn{
-	constructor(card1,bet){
+	constructor(card1,bets){
 		this._card1 = card1;
-		this._bet = bet;
+		this._bets = bets;
 	}
 	get card1(){
 		return this._card1;
@@ -127,20 +127,20 @@ class Turn{
 	set card1(card1){
 		this._card1 = card1;
 	}
-	set bet(bet){
-		this._bet = bet;
+	set bets(bets){
+		this._bets = bets;
 	}
 
-	get bet(){
-		return this._bet;
+	get bets(){
+		return this._bets;
 	}
 
 }
 
 class River{
-	constructor(card1,bet){
+	constructor(card1,bets){
 		this._card1 = card1;
-		this._bet = bet;
+		this._bets = bets;
 	}
 	get card1(){
 		return this._card1;
@@ -148,26 +148,26 @@ class River{
 	set card1(card1){
 		this._card1 = card1;
 	}
-	set bet(bet){
-		this._bet = bet;
+	set bets(bets){
+		this._bets = bets;
 	}
 
-	get bet(){
-		return this._bet;
+	get bets(){
+		return this._bets;
 	}
 
 }
 
 class Preflop{
-	constructor(bet){
-		this._bet = bet;
+	constructor(bets){
+		this._bets = bets;
 	}
-	set bet(bet){
-		this._bet = bet;
+	set bet(bets){
+		this._bets = bets;
 	}
 
-	get bet(){
-		return this._bet;
+	get bets(){
+		return this._bets;
 	}
 }
 
@@ -175,15 +175,37 @@ class Preflop{
 
 
 class Bet{
-	var current = 0;
 	constructor(player,bet){
 	 	this._player = player;
 	 	this._bet = bet;
 	 }
+}
+
+class Bets{
+
+	constructor(){
+		this._current = 0;
+		this._bets = [];
+	}
+
+	addBet(bet){
+		this._bets.push(bet);
+	}
+
+	getNextBet(){
+		if(this._bets.length===0){
+			return this._bets[current++];
+		}
+	}
+
+
+
+
 
 
 
 }
+
 
 
 
