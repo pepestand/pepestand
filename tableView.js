@@ -1,9 +1,9 @@
 function addCardAt(x,y,w,value){
 	var card = document.createElement("img");
 	console.log(card);
-	
-	
-	
+
+
+
 	card.src="cardimages/PNG/"+value+".png";
 	card.width = w;
 	card.style = "position:absolute; left:"+x+"; top:"+y+";height:auto";
@@ -15,39 +15,39 @@ function addCardAt(x,y,w,value){
 function addPlayerAt(x,y,name,money){
 	var playerBox = document.createElement("div");
 	playerBox.id = name;
-	
-	
+
+
 	playerBox.style = "border:1px solid blue;width:200;z-Index=200;position:absolute;";
 	playerBox.style.left = x;
 	playerBox.style.top = y;
-	
+
 	var profilePicture = document.createElement("img");
 	profilePicture.src = "https://pbs.twimg.com/profile_images/874254884421369856/STsgRa7p_400x400.jpg";
 	profilePicture.width = 40;
 	profilePicture.height = 40;
 	playerBox.appendChild(profilePicture);
-	
-	
+
+
 	var profileName = document.createElement("p");
 	profileName.style = "display: inline; left:60px;position: absolute; font-weight: bold;color:white";
 	var node = document.createTextNode(name+" $"+money);
 	profileName.id = name + "pn";
 	profileName.appendChild(node);
 	playerBox.appendChild(profileName);
-	
+
 	var card1 = document.createElement("img");
 	card1.src = "cardimages/PNG/AH.png";
 	card1.style = " position:absolute; width: 40; height:auto; top:-50";
 	card1.id = name+"card1";
 	playerBox.appendChild(card1);
-	
+
 	var card2 = document.createElement("img");
 	card2.src = "cardimages/PNG/AS.png";
 	card2.style = " position:absolute; width: 40; height:auto; top:-50; left:80";
 	card2.id = name+"card2";
 	playerBox.appendChild(card2);
-	
-	
+
+
 	document.getElementById("tableContainer").appendChild(playerBox);
 	//createBetBox(name,100,100);
 }
@@ -65,7 +65,7 @@ function changePlayerCard2(player,card){
 function changePlayerCards(player,card1,card2){
 	changePlayerCard1(player,card1);
 	changePlayerCard2(player,card2);
-	
+
 
 }
 
@@ -73,8 +73,8 @@ function changePlayerCards(player,card1,card2){
 function changePlayerMoney(player,m){
 	var name = document.getElementById(player+"pn").innerHTML.split("$")[0];
 	document.getElementById(player+"pn").innerHTML = name+"$"+m;
-	
-	
+
+
 }
 
 
@@ -84,48 +84,48 @@ function createFlopTurnRiver(visible = true){
 	flop.style = "border:0px solid blue;width:200;z-Index=200;position:absolute;top:40%;left:40%";
 	flop.id = "flop";
 	document.getElementById("tableContainer").appendChild(flop);
-	
+
 	var flop1 = document.createElement("img");
 	flop1.id = "flop1";
 	flop1.src = "cardimages/PNG/gray_back.png";
 	flop1.style = "width: 40; height:auto; top:-70";
 	flop.appendChild(flop1);
-	
+
 	var flop2 = document.createElement("img");
 	flop2.id = "flop2";
 	flop2.src = "cardimages/PNG/gray_back.png";
 	flop2.style = "width: 40; height:auto; top:-70";
 	flop.appendChild(flop2);
-	
+
 	var flop3 = document.createElement("img");
 	flop3.id = "flop3";
 	flop3.src = "cardimages/PNG/gray_back.png";
 	flop3.style = "width: 40; height:auto";
 	flop.appendChild(flop3);
-	
+
 	var turn = document.createElement("img");
 	turn.id = "turn";
 	turn.src = "cardimages/PNG/gray_back.png";
 	turn.style = "width: 40; height:auto; top:-70";
 	flop.appendChild(turn);
-	
+
 	var river = document.createElement("img");
 	river.id = "river";
 	river.src = "cardimages/PNG/gray_back.png";
 	river.style = "width: 40; height:auto; top:-70";
 	flop.appendChild(river);
-	
+
 	if(!visible){
 		flop1.style.visibility = "hidden";
 		flop2.style.visibility = "hidden";
 		flop3.style.visibility = "hidden";
 		turn.style.visibility = "hidden";
 		river.style.visibility = "hidden";
-	
+
 	}
-	
-	
-	
+
+
+
 
 }
 
@@ -162,7 +162,6 @@ function changeFlop(card1,card2,card3){
 	changeFlop1(card1);
 	changeFlop2(card2);
 	changeFlop3(card3);
-
 }
 
 function changeBoard(card1,card2,card3,card4,card5){
@@ -180,6 +179,20 @@ function turnAroundBoard(){
 	document.getElementById("turn").src = "cardimages/PNG/gray_back.png";
 	document.getElementById("river").src = "cardimages/PNG/gray_back.png";
 
+}
+
+function turnAroundFlop(){
+	document.getElementById("flop1").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("flop2").src = "cardimages/PNG/gray_back.png";
+	document.getElementById("flop3").src = "cardimages/PNG/gray_back.png";
+}
+
+function turnAroundTurn(){
+	document.getElementById("turn").src = "cardimages/PNG/gray_back.png";
+}
+
+function turnAroundRiver(){
+	document.getElementById("river").src = "cardimages/PNG/gray_back.png";
 }
 
 
@@ -219,10 +232,10 @@ changePlayerCards("player2","7C","7D");
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {
-    
+
     document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
   } else {
-  
+
     elmnt.onmousedown = dragMouseDown;
   }
 
@@ -251,7 +264,7 @@ function dragElement(elmnt) {
   }
 
   function closeDragElement() {
-  
+
     document.onmouseup = null;
     document.onmousemove = null;
   }
@@ -281,11 +294,11 @@ function getCords(){
 		var cordL = document.getElementById("player"+i+"betBox").style.left;
 		var cordT = document.getElementById("player"+i+"betBox").style.top;
 		p.innerHTML = p.innerHTML + "<br>" + "player"+i+" L:"+cordL+" T:"+cordT;
-	
+
 	}
-	
-	
-	
+
+
+
 	console.log(p);
 
 
@@ -294,9 +307,9 @@ function getCords(){
 
 
 function placePlayers(n){
-	var coords = [{x:null, y:null}, {x: 435, y: 449}, {x: 227, y: 436}, {x: 57, y: 365}, {x: 0, y: 215}, {x: 149, y: 96}, {x: 392, y: 71}, {x: 643, y: 96}, {x: 767, y: 271}, {x: 636, y: 403}]; 
+	var coords = [{x:null, y:null}, {x: 435, y: 449}, {x: 227, y: 436}, {x: 57, y: 365}, {x: 0, y: 215}, {x: 149, y: 96}, {x: 392, y: 71}, {x: 643, y: 96}, {x: 767, y: 271}, {x: 636, y: 403}];
 	var betBoxCoords = [{x:null, y:null}, {x: 477, y: 367}, {x: 329, y: 357}, {x: 222, y: 328}, {x: 211, y: 224}, {x: 271, y: 146}, {x: 459, y: 120}, {x: 705, y: 142}, {x: 727, y: 244}, {x: 637, y: 323}];
-	
+
 	for(var i = 1; i <= n; i++){
 		//console.log(coords[i].x + " " + coords[i].y);
 		var x = coords[i].x;
@@ -305,9 +318,9 @@ function placePlayers(n){
 		var bx = betBoxCoords[i].x;
 		var by = betBoxCoords[i].y;
 		createBetBox("player"+i,bx,by);
-		
-		
-		
+
+
+
 	}
 }
 
@@ -315,11 +328,11 @@ function placePlayers(n){
 function createBetBox(player,x,y){
 	var betBox = document.createElement("div");
 	betBox.id = player+"betBox";
-	
-	
+
+
 	betBox.style = "border:1px solid red;z-Index=200;position:absolute;font-weight: bold;color:white";
 	betBox.style.left = x;
-	betBox.style.top = y;	
+	betBox.style.top = y;
 	betBox.innerHTML = "$ 0";
 	document.getElementById("tableContainer").appendChild(betBox);
 }
@@ -353,11 +366,11 @@ function unhighlightPlayerBox(player){
 function addPotAt(x,y){
 	var potBox = document.createElement("div");
 	potBox.id = "pot";
-	
-	
+
+
 	potBox.style = "border:1px solid red;z-Index=200;position:absolute;font-weight: bold;color:white";
 	potBox.style.left = x;
-	potBox.style.top = y;	
+	potBox.style.top = y;
 	potBox.innerHTML = "$ 0";
 	document.getElementById("tableContainer").appendChild(potBox);
 }
@@ -397,10 +410,23 @@ function createBasicTable(n){
 }
 
 
+function addNextPreButton(){
+	let buttonBox = document.createElement("div");
+	buttonBox.id = "buttonBox";
 
 
+	buttonBox.style = "border:1px solid red;z-Index=300;position:absolute;font-weight: bold;color:white; left:80%";
+	let nextButton = document.createElement("button");
+	nextButton.id = "nextButton";
+	nextButton.innerHTML ="-->";
+	let preButton = document.createElement("button");
+	preButton.id = "preButton";
+	preButton.innerHTML = "<--";
+	buttonBox.appendChild(preButton);
+	buttonBox.appendChild(nextButton);
 
+	document.getElementById("tableContainer").appendChild(buttonBox);
 
+}
 
-
-
+addNextPreButton();
