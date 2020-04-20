@@ -44,7 +44,7 @@ function kek(){
 
 
 
-createBasicTable(9);
+//createBasicTable(9);
 
 
 class State{
@@ -66,11 +66,11 @@ class Player{
 		this._money = money;
 		this._card1 = card1;
 		this._card2 = card2;
+		this._currentBet = 0;
 	}
 	set card1(card1){
 		this._card1 = card1;
 		}
-
 	get card1(){
 		return this._card1;
 		}
@@ -88,6 +88,16 @@ class Player{
 	get money(){
 		return this._money;
 		}
+	get name(){
+		return this._name;
+	}
+	foldCards(){
+		foldPlayerCards(this._name);
+	}
+	giveCards(card1, card2){
+		changePlayerCards(this._name, card1, card2);
+	}
+
 }
 
 class Flop extends State{
@@ -155,13 +165,21 @@ class Preflop extends State{
 	}
 }
 
+class PostRiver extends State{ //pseudo state
+	constructor(bets){
+		super(bets);
+	}
+}
+
 
 
 
 class Bet{
-	constructor(player,bet){
+	constructor(player,bet,type, isAllIn = false){ //type should be fold, check, call, raise, // isAllIn indicates if player is allin. default is false.
 	 	this._player = player;
 	 	this._bet = bet;
+		this._type = type;
+		this._isAllIn = isAllIn;
 	 }
 }
 
@@ -210,8 +228,34 @@ class Game{
 		this._states = states;
 		this._current = 0;
 		this._currentState = states[this._current];
-
+		this._currentPot = 0;
+		this._pots = [0,0,0,0]; // 0 = Preflop pot, 1 = Flop pot, 2 = turn pot, 3 = river pot
+		this.calculatePots();
 	}
+
+	calculatePots(){
+		for(let k = 0; k <= 3; k++){
+			let preFlopPot = 0;
+			let bets = this._states[k]._bets._bets;
+			for(let i = 0; i < bets.length; i++){
+				bets[i]._player._currentBet = bets[i]._bet;
+			}
+			for(let i = 0; i < this._players.length; i++){
+				preFlopPot = preFlopPot + this._players[i]._currentBet;
+				this._players[i]._currentBet = 0;
+			}
+			this._pots[k] = preFlopPot;
+		}
+
+		for(let i = 1; i <= 3; i++){
+			this._pots[i] = this._pots[i] + this._pots[i-1];
+		}
+		console.log(this._pots);
+
+		//
+	}
+
+
 
 	showNextBet(){
 		let nextBet = this._currentState.bets.getNextBet();
@@ -225,26 +269,35 @@ class Game{
 			if(this._current === 1){ //flop reached
 				console.log(this._currentState);
 				changeFlop(this._currentState.card1,this._currentState.card2,this._currentState.card3);
+				changePot(this._pots[0]);
 			}
 
 			if(this._current === 2){ //turn reached
 				changeTurn(this._currentState.card1);
+				changePot(this._pots[1]);
 			}
 			if(this._current === 3){ //river reached
 				changeRiver(this._currentState.card1);
+				changePot(this._pots[2]);
+			}
+
+			if(this._current === 4){ //post River reached
+				changePot(this._pots[3]);
 			}
 		}
 
 
 		console.log(this._currentState.bets._current);
-		for(let i = 0;i < this._players.length;i++){
-			changeBetBox(this._players[i],0);
-		}
-		for(let i = 0;i <= this._currentState.bets._current;i++){
-			let bets = this._currentState._bets._bets[i];
-			changeBetBox(bets._player, bets._bet );
+		for(let i = 0;i < this._players.length;i++){  //hotfix, change in class later
+			changeBetBox(this._players[i].name,0);
+			this._players[i]._currentBet = 0;
 		}
 
+		for(let i = 0;i <= this._currentState.bets._current;i++){
+			let bets = this._currentState._bets._bets[i];
+			changeBetBox(bets._player.name, bets._bet );
+			bets._player._currentBet = bets._bet;
+		}
 	}
 
 	showPreviousBet(){
@@ -259,60 +312,83 @@ class Game{
 			if(this._current === 0){ //preflop reached
 				console.log(this._currentState);
 				turnAroundFlop();
+				changePot(0);
 			}
 			if(this._current === 1){ //flop reached
 				turnAroundTurn();
 				turnAroundRiver();
+				changePot(this._pots[0]);
 			}
 			if(this._current === 2){ //turn reached
 				turnAroundRiver();
+				changePot(this._pots[1]);
 			}
+			if(this._current ===3){ //river reached
+				changePot(this._pots[2]);
+			}
+
 		}
 
 		console.log(previousBet);
-		for(let i = 0;i < this._players.length;i++){
-			changeBetBox(this._players[i],0);
+		for(let i = 0;i < this._players.length;i++){ //hotfix, change in class later
+			changeBetBox(this._players[i].name,0);
 		}
 		for(let i = 0;i <= this._currentState.bets._current;i++){
 			let bets = this._currentState._bets._bets[i];
-			changeBetBox(bets._player, bets._bet );
+			changeBetBox(bets._player.name, bets._bet );
 		}
 	}
 }
 
 
-let bet1 = new Bet("player1",200);
-let bet2 = new Bet("player2",400);
-let bet3 = new Bet("player1",400);
+let player1 = new Player("Peter", 20000, "7H", "7D");
+let player2 = new Player("Carl",7500, "AS", "KH");
+
+let bet1 = new Bet(player1,200,"raise");
+let bet2 = new Bet(player2,400,"raise");
+let bet3 = new Bet(player1,400,"call");
 let bets1 = new Bets();
 bets1.addBet(bet1); bets1.addBet(bet2); bets1.addBet(bet3);
 let pre1 = new Preflop(bets1);
 
-let bet21 = new Bet("player1",500);
-let bet22 = new Bet("player2",1000);
-let bet23 = new Bet("player1",2000);
-let bet24 = new Bet("player2",2000);
+let bet21 = new Bet(player1,500,"raise");
+let bet22 = new Bet(player2,1000,"raise");
+let bet23 = new Bet(player1,2000,"raise");
+let bet24 = new Bet(player2,2000,"call");
 let bets2 = new Bets();
 bets2.addBet(bet21); bets2.addBet(bet22); bets2.addBet(bet23); bets2.addBet(bet24);
 let flop1 = new Flop("KH","KC","KS",bets2);
 
-let bet31 = new Bet("player1", 3000);
-let bet32 = new Bet("player2", 5000);
-let bet33 = new Bet("player1", 5000);
+let bet31 = new Bet(player1, 3000,"raise");
+let bet32 = new Bet(player2, 5000,"raise");
+let bet33 = new Bet(player1, 5000,"call");
 let bets3 = new Bets();
 bets3.addBet(bet31); bets3.addBet(bet32); bets3.addBet(bet33);
 let turn1 = new Turn("AC",bets3);
 
-let bet41 = new Bet("player1", 7000);
-let bet42 = new Bet("player2", 20000);
-let bet43 = new Bet("player1", 20000);
+let bet41 = new Bet(player1, 7000,"raise");
+let bet42 = new Bet(player2, 20000,"raise");
+let bet43 = new Bet(player1, 20000,"call");
 let bets4 = new Bets();
 bets4.addBet(bet41); bets4.addBet(bet42); bets4.addBet(bet43);
-let river1 = new Turn("AH",bets4);
+let river1 = new River("AH",bets4);
 
 
-let states1 = [pre1, flop1,turn1,river1];
-let game1 = new Game(["player1", "player2"],states1);
+
+let bet51 = new Bet(player1,0,"check");
+let bet52 = new Bet(player2,0,"check");
+let bets5 = new Bets();
+bets5.addBet(bet51); bets5.addBet(bet52);
+let postRiver1 = new PostRiver(bets5);
+
+
+
+
+
+let states1 = [pre1, flop1,turn1,river1, postRiver1];
+
+let players = [player1, player2];
+let game1 = new Game(players ,states1);
 /*
 game1.showNextBet();
 game1.showNextBet();
@@ -324,6 +400,8 @@ game1.showPreviousBet();
 document.getElementById("nextButton").addEventListener ("click", function(){game1.showNextBet();});
 document.getElementById("preButton").addEventListener ("click", function(){game1.showPreviousBet();});
 
+
+createBasicTable(2, players);
 
 
 

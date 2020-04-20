@@ -63,10 +63,15 @@ function changePlayerCard2(player,card){
 }
 
 function changePlayerCards(player,card1,card2){
+	document.getElementById(player+"card1").style.visibility = visible;
+	document.getElementById(player+"card2").style.visibility = visible;
 	changePlayerCard1(player,card1);
 	changePlayerCard2(player,card2);
+}
 
-
+function foldPlayerCards(player){
+	document.getElementById(player+"card1").style.visibility = hidden;
+	document.getElementById(player+"card2").style.visibility = hidden;
 }
 
 
@@ -306,7 +311,7 @@ function getCords(){
 
 
 
-function placePlayers(n){
+function placePlayers(n, players){
 	var coords = [{x:null, y:null}, {x: 435, y: 449}, {x: 227, y: 436}, {x: 57, y: 365}, {x: 0, y: 215}, {x: 149, y: 96}, {x: 392, y: 71}, {x: 643, y: 96}, {x: 767, y: 271}, {x: 636, y: 403}];
 	var betBoxCoords = [{x:null, y:null}, {x: 477, y: 367}, {x: 329, y: 357}, {x: 222, y: 328}, {x: 211, y: 224}, {x: 271, y: 146}, {x: 459, y: 120}, {x: 705, y: 142}, {x: 727, y: 244}, {x: 637, y: 323}];
 
@@ -314,13 +319,11 @@ function placePlayers(n){
 		//console.log(coords[i].x + " " + coords[i].y);
 		var x = coords[i].x;
 		var y = coords[i].y;
-		addPlayerAt(x,y,"player"+i,500);
+		addPlayerAt(x, y, players[i-1].name, players[i-1].money);
+
 		var bx = betBoxCoords[i].x;
 		var by = betBoxCoords[i].y;
-		createBetBox("player"+i,bx,by);
-
-
-
+		createBetBox(players[i-1].name,bx,by);
 	}
 }
 
@@ -375,6 +378,10 @@ function addPotAt(x,y){
 	document.getElementById("tableContainer").appendChild(potBox);
 }
 
+function changePot(x){
+	document.getElementById("pot").innerHTML = "$ "+ x;
+}
+
 
 
 
@@ -402,8 +409,8 @@ function toggleBetBox(player){
 
 
 
-function createBasicTable(n){
-	placePlayers(n);
+function createBasicTable(n, players){
+	placePlayers(n, players);
 	createFlopTurnRiver(true);
 	addPotAt("50%","55%");
 
